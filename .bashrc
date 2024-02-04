@@ -1,13 +1,12 @@
 # my own stuff
 alias "vim"="nvim"
-alias "cvim"="cd ~/.config/nvim; vim init.lua; cd -"
 alias "avim"="nvim -u ~/.config/astronvim/entry.lua"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
 source ~/.nvm/nvm.sh
 eval "$(oh-my-posh init bash --config /mnt/c/Users/bogda/.oh-my-posh.omp.json)"
 if [[ -z "$TMUX" ]]; then
-    eval "$(tmux attach)"
+    eval "$(tmux attach || tmux new)"
 fi
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
