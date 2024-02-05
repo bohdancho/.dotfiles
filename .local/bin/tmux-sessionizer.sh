@@ -9,4 +9,12 @@ fi
 
 SELECTED_NAME=$(basename "$SELECTED" | tr . _)
 
-tmux new-window -n $SELECTED_NAME -c $SELECTED
+if [[ $1 == "window" ]]; then
+    tmux new-window -n $SELECTED_NAME -c $SELECTED
+elif [[ $1 == "session" ]]; then
+    tmux new-session -ds $SELECTED_NAME -c $SELECTED
+    tmux rename-window -t $SELECTED_NAME:1 $SELECTED_NAME
+    tmux switch-client -t $SELECTED_NAME
+fi
+    
+tmux send-keys "nvim" C-m

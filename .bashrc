@@ -1,13 +1,15 @@
 # my own stuff
 alias "vim"="nvim"
-alias "avim"="nvim -u ~/.config/astronvim/entry.lua"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
-source ~/.nvm/nvm.sh
 eval "$(oh-my-posh init bash --config /mnt/c/Users/bogda/.oh-my-posh.omp.json)"
 if [[ -z "$TMUX" ]]; then
     eval "$(tmux attach || tmux new)"
 fi
+
+# fnm
+export PATH="/home/bohdancho/.local/share/fnm:$PATH"
+eval "`fnm env`"
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -127,10 +129,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
