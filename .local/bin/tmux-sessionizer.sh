@@ -15,6 +15,9 @@ elif [[ $1 == "session" ]]; then
     tmux new-session -ds $SELECTED_NAME -c $SELECTED
     tmux rename-window -t $SELECTED_NAME:1 $SELECTED_NAME
     tmux switch-client -t $SELECTED_NAME
+else
+    echo "Usage: $0 [window|session]"
+    exit 1
 fi
     
 tmux send-keys "nvim" C-m
