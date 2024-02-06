@@ -20,4 +20,4 @@ else
     exit 1
 fi
     
-tmux send-keys "nvim" C-m
+# tmux send-keys "nvim" C-m
