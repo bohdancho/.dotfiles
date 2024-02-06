@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 PROJECTS=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
-EXTRA=("$HOME/.config/nvim" "$HOME")
+EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim")
 SELECTED=$(echo "$PROJECTS ${EXTRA[*]}" | tr ' ' '\n' | fzf)
 
 if [[ -z $SELECTED ]]; then
