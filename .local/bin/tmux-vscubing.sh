@@ -8,6 +8,7 @@ SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 if [ "$SESSIONEXISTS" = "" ]; then
     # Start New Session with our name
     tmux new-session -d -s $SESSION
+    tmux new-session -d -s $SESSION -c "$HOME/projects/vscubing"
 
     # Window 1: vscubing-frontend
     tmux rename-window -t $SESSION:1 'frontend'
