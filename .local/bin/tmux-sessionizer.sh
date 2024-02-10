@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-PROJECTS=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
+PROJECTS=$(find ~/projects ~/projects/vscubing -mindepth 1 -maxdepth 1 -type d)
 EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim")
 SELECTED=$(echo "$PROJECTS ${EXTRA[*]}" | tr ' ' '\n' | fzf)
 
