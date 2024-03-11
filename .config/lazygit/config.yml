@@ -1,3 +1,6 @@
+os:
+  edit: 'nvim {{filename}}'
+
 # catppuccin with custom green-ish activeBorderColor
 gui:
   theme:
