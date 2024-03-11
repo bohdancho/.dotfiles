@@ -3,7 +3,7 @@ alias "vim"="nvim"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
 alias "cat"="batcat --style=plain"
-eval "$(oh-my-posh init bash --config ~/.config/.oh-my-posh.omp.json)"
+eval "$(starship init bash)"
 if [[ -z "$TMUX" ]]; then
     eval "$(tmux attach || tmux new)"
 fi
