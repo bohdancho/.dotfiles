@@ -5,7 +5,10 @@ alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
 alias "cat"="batcat --style=plain"
 eval "$(starship init bash)"
 if [[ -z "$TMUX" ]]; then
-    eval "$(tmux attach || tmux new)"
+    if ! tmux attach; then
+        tmux new-session -ds sup-nerd "~/.local/bin/tmux-sessionizer.sh session" 
+        tmux attach
+    fi
 fi
 
 # fnm
