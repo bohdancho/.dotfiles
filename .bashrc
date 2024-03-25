@@ -3,6 +3,7 @@ alias "vim"="nvim"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
 alias "cat"="batcat --style=plain"
+alias air='~/.air' # for golang live reload
 eval "$(starship init bash)"
 if [[ -z "$TMUX" ]]; then
     if ! tmux attach; then
@@ -10,10 +11,6 @@ if [[ -z "$TMUX" ]]; then
         tmux attach
     fi
 fi
-
-# fnm
-export PATH="/home/bohdancho/.local/share/fnm:$PATH"
-eval "`fnm env`"
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -135,3 +132,21 @@ fi
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
+
+# # fnm - disabled in favor of pnpm
+# export PATH="/home/bohdancho/.local/share/fnm:$PATH"
+# eval "`fnm env`"
+
+# pnpm
+export PNPM_HOME="/home/bohdancho/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH=$PATH:/usr/local/go/bin
