@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 PROJECTS=$(find ~/projects ~/projects/vscubing -mindepth 1 -maxdepth 1 -type d)
-EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim" "$HOME/personal")
+EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim" "$HOME/personal" "$WIN")
 SELECTED=$(echo "$PROJECTS ${EXTRA[*]}" | tr ' ' '\n' | fzf)
 
 if [[ -z $SELECTED ]]; then
@@ -19,5 +19,3 @@ else
     echo "Usage: $0 [window|session]"
     exit 1
 fi
-    
-# tmux send-keys "nvim" C-m

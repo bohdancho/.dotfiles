@@ -1,4 +1,5 @@
 # my own stuff
+export WIN='/mnt/c/Users/bogda/Desktop'
 alias "vim"="nvim"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
