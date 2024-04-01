@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 PROJECTS=$(find ~/projects ~/projects/vscubing -mindepth 1 -maxdepth 1 -type d)
-EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim" "$HOME/personal" "$WIN")
-SELECTED=$(echo "$PROJECTS ${EXTRA[*]}" | tr ' ' '\n' | fzf)
+EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim" "$HOME/personal" "$HOME/.local/share/nvim/lazy" "$WIN")
+PRESETS=("tmux-vscubing" "tmux-imaginaer")
+SELECTED=$(echo "$PROJECTS ${EXTRA[*]} ${PRESETS[*]}" | tr ' ' '\n' | fzf)
 
 if [[ -z $SELECTED ]]; then
+    exit 1
+fi
+
+# if is a preset
+if echo "${PRESETS[@]}" | grep $SELECTED> /dev/null; then
+    echo "${PRESETS[@]}" | grep $SELECTED
+    tmux neww "~/.local/bin/$SELECTED.sh"
     exit 0
 fi
 
