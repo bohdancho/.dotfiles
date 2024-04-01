@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-PROJECTS=$(find ~/projects ~/projects/vscubing -mindepth 1 -maxdepth 1 -type d)
+PROJECTS=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
 EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim" "$HOME/personal" "$HOME/.local/share/nvim/lazy" "$WIN")
 PRESETS=("tmux-vscubing" "tmux-imaginaer")
 SELECTED=$(echo "$PROJECTS ${EXTRA[*]} ${PRESETS[*]}" | tr ' ' '\n' | fzf)
