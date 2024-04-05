@@ -22,7 +22,7 @@ if [ "$SESSIONEXISTS" = "" ]; then
 
     # Window 4: cstimer
     tmux new-window -t $SESSION:4 -n 'cstimer'
-    tmux send-keys -t $SESSION:4 'cd cstimer' C-m 'make' C-m 'php -S 127.0.0.1:8081 -t dist' C-m
+    tmux send-keys -t $SESSION:4 'cd ~/projects/vscubing/cstimer' C-m 'make' C-m 'php -S 127.0.0.1:8081 -t dist' C-m
 fi
 
 tmux switch-client -t $SESSION:1

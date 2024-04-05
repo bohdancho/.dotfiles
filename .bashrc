@@ -137,7 +137,6 @@ fi
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-
 # # fnm - disabled in favor of pnpm
 # export PATH="/home/bohdancho/.local/share/fnm:$PATH"
 # eval "`fnm env`"
