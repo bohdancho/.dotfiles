@@ -1,5 +1,8 @@
-\windows
+windows
 local/share
 local/state
 README.md
 todo.md
+.git
+.gitignore
+.gitmodules
