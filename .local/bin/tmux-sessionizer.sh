@@ -11,7 +11,7 @@ fi
 # if is a preset
 if echo "${PRESETS[@]}" | grep $SELECTED> /dev/null; then
     echo "${PRESETS[@]}" | grep $SELECTED
-    tmux neww "~/.local/bin/$SELECTED.sh"
+    tmux neww "~/.local/bin/tmux-presets/$SELECTED.sh"
     exit 0
 fi
 
