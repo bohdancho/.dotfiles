@@ -16,25 +16,8 @@
             "keys": "ctrl+c"
         },
         {
-            "command": "unbound",
-            "keys": "alt+space"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+comma"
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "keys": "alt+shift+d"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
+            "keys": "ctrl+backspace",
+            "command": { "action": "sendInput", "input": "\u0017" }
         }
     ],
     "confirmCloseAllTabs": false,
