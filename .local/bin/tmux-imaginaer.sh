@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Set Session Name
-SESSION="imaginaer"
+SESSION="tmux-imaginaer"
 SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
 if [ "$SESSIONEXISTS" = "" ]; then
