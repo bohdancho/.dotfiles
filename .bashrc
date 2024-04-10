@@ -1,11 +1,14 @@
-# my own stuff
+# my custom stuff
 export WIN='/mnt/c/Users/bogda/Desktop'
 alias "vim"="nvim"
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
-alias "cat"="batcat --style=plain"
+
+alias "cat"="batcat"
+export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+
 alias air='~/.air' # for golang live reload
 eval "$(starship init bash)"
+
 if [[ -z "$TMUX" ]]; then
     if ! tmux attach; then
         tmux new-session -ds sup-nerd "~/.local/bin/tmux-sessionizer.sh session" 
@@ -13,9 +16,11 @@ if [[ -z "$TMUX" ]]; then
     fi
 fi
 
-kp () {
+killp () {
     kill -9 $(lsof -t -i:$1)
 }
+
+# default ubuntu stuff
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -134,6 +139,8 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
+
+# my installed stuff
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
