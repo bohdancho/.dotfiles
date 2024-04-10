@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# credits go to ThePrimeagen
+# https://github.com/ThePrimeagen/.dotfiles/blob/602019e902634188ab06ea31251c01c1a43d1621/bin/.local/scripts/tmux-sessionizer
+
 PROJECTS=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
 EXTRA=("$HOME" "$HOME/.dotfiles" "$HOME/.dotfiles/.config/nvim" "$HOME/personal" "$HOME/.local/share/nvim/lazy" "$WIN")
 PRESETS=("tmux-vscubing" "tmux-imaginaer")
