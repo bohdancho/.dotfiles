@@ -21,6 +21,7 @@ fi
 
 SELECTED_NAME=$(basename "$SELECTED" | tr . _)
 
+# window or session parameter
 if [[ $1 == "window" ]]; then
     tmux new-window -n $SELECTED_NAME -c $SELECTED
 elif [[ $1 == "session" ]]; then
