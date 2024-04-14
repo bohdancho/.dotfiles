@@ -1,10 +1,10 @@
 # my custom stuff
 export WIN='/mnt/c/Users/bogda/Desktop'
 alias "vim"="nvim"
-alias "vscubing"="~/.local/bin/tmux-vscubing.sh"
 
 alias "cat"="batcat"
 export MANPAGER="sh -c 'col -bx | batcat -l man -p'"
+export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!.git/"'
 
 alias air='~/.air' # for golang live reload
 eval "$(starship init bash)"
@@ -15,6 +15,21 @@ if [[ -z "$TMUX" ]]; then
         tmux attach
     fi
 fi
+
+fzv() {
+    ORIGINAL_PWD=$PWD
+    if [[ ! -z $1 ]]; then
+        cd $1
+    fi
+    SELECTED=$(fzf)
+
+    if [[ -z $SELECTED ]]; then
+        cd $ORIGINAL_PWD
+        return
+    fi
+
+    nvim $SELECTED && cd $ORIGINAL_PWD
+}
 
 killp () {
     kill -9 $(lsof -t -i:$1)
