@@ -11,7 +11,7 @@ eval "$(starship init bash)"
 
 if [[ -z "$TMUX" ]]; then
     if ! tmux attach; then
-        tmux new-session -ds sup-nerd "~/.local/bin/tmux-sessionizer.sh session" 
+        tmux new-session -ds sup-nerd "~/.local/bin/tmux-sessionizer session" 
         tmux attach
     fi
 fi
