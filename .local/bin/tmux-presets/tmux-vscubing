@@ -14,12 +14,12 @@ if [ "$SESSIONEXISTS" = "" ]; then
 
     # Window 2: vscubing-frontend - Run dev server
     tmux new-window -t $SESSION:2 -n 'frontend-server'
-    tmux send-keys -t $SESSION:2 'cd ~/projects/vscubing/vscubing-frontend' C-m 'bun run dev --open' C-m
+    tmux send-keys -t $SESSION:2 'cd ~/projects/vscubing/vscubing-frontend' C-m 'bun run dev --host' C-m # NOTE: open from 127.0.0.1:3000
 
     # Window 3: vscubing-backend
     tmux new-window -t $SESSION:3 -n 'backend-server'
-    # tmux send-keys -t $SESSION:3 'cd ~/projects/vscubing/vscubing-backend' C-m 'source venv/bin/activate' C-m 'python3 manage.py runserver' C-m
-    tmux send-keys -t $SESSION:3 'cd ~/projects/vscubing/vscubing-backend.before-refactor' C-m 'source venv/bin/activate' C-m 'python3 manage.py runserver' C-m
+    tmux send-keys -t $SESSION:3 'cd ~/projects/vscubing/vscubing-backend' C-m 'source venv/bin/activate' C-m 'python3 manage.py runserver' C-m
+    # tmux send-keys -t $SESSION:3 'cd ~/projects/vscubing/vscubing-backend.before-refactor' C-m 'source venv/bin/activate' C-m 'python3 manage.py runserver' C-m
 
     # Window 4: cstimer
     tmux new-window -t $SESSION:4 -n 'cstimer'
