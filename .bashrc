@@ -9,6 +9,8 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!.git/"'
 alias air='~/.air' # for golang live reload
 eval "$(starship init bash)"
 
+alias vsapigen='rm -rf node_modules && bun uninstall eslint && bun i && bun gen:api && bun install eslint -D' # vscubing workaround
+
 if [[ -z "$TMUX" ]]; then
     if ! tmux attach; then
         tmux new-session -ds sup-nerd "~/.local/bin/tmux-sessionizer session" 
@@ -34,6 +36,7 @@ fzv() {
 killp () {
     kill -9 $(lsof -t -i:$1)
 }
+
 
 # default ubuntu stuff
 
