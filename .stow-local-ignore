@@ -1,6 +1,5 @@
 windows
-local/share
-local/state
+.local
 README.md
 todo.md
 .git
