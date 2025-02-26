@@ -412,7 +412,6 @@ require("lazy").setup {
                     multiline_threshold = 1, -- Maximum number of lines to show for a single context
                 }
 
-                ---@diagnostic disable-next-line: missing-fields
                 configs.setup {
                     auto_install = true,
                     highlight = {
@@ -448,7 +447,15 @@ require("lazy").setup {
         {
             "neovim/nvim-lspconfig",
             dependencies = {
-                { "williamboman/mason.nvim", opts = {} },
+                {
+                    "williamboman/mason.nvim",
+                    opts = {
+                        registries = {
+                            "github:mason-org/mason-registry",
+                            "github:crashdummyy/mason-registry",
+                        },
+                    },
+                },
                 "williamboman/mason-lspconfig.nvim",
                 "WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -659,6 +666,8 @@ require("lazy").setup {
                     "prettierd",
                     "sql-formatter",
                     "black",
+                    "roslyn",
+                    "rzls",
                     { "angularls", version = "18.2.0" }, -- v19 expects standalone: true default which breaks v18
                 })
                 require("mason-tool-installer").setup { ensure_installed = ensure_installed }
@@ -687,8 +696,74 @@ require("lazy").setup {
         },
         {
             "seblyng/roslyn.nvim",
-            ft = "cs",
-            opts = {},
+            ft = { "cs", "razor" },
+            dependencies = {
+                {
+                    "tris203/rzls.nvim",
+                    config = function()
+                        require("rzls").setup {}
+                    end,
+                },
+            },
+            config = function()
+                require("roslyn").setup {
+                    args = {
+                        "--stdio",
+                        "--logLevel=Information",
+                        "--extensionLogDirectory=" .. vim.fs.dirname(vim.lsp.get_log_path()),
+                        "--razorSourceGenerator=" .. vim.fs.joinpath(
+                            vim.fn.stdpath "data" --[[@as string]],
+                            "mason",
+                            "packages",
+                            "roslyn",
+                            "libexec",
+                            "Microsoft.CodeAnalysis.Razor.Compiler.dll"
+                        ),
+                        "--razorDesignTimePath=" .. vim.fs.joinpath(
+                            vim.fn.stdpath "data" --[[@as string]],
+                            "mason",
+                            "packages",
+                            "rzls",
+                            "libexec",
+                            "Targets",
+                            "Microsoft.NET.Sdk.Razor.DesignTime.targets"
+                        ),
+                    },
+                    ---@diagnostic disable-next-line: missing-fields
+                    config = {
+                        handlers = require "rzls.roslyn_handlers",
+                        settings = {
+                            ["csharp|inlay_hints"] = {
+                                csharp_enable_inlay_hints_for_implicit_object_creation = true,
+                                csharp_enable_inlay_hints_for_implicit_variable_types = true,
+
+                                csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+                                csharp_enable_inlay_hints_for_types = true,
+                                dotnet_enable_inlay_hints_for_indexer_parameters = true,
+                                dotnet_enable_inlay_hints_for_literal_parameters = true,
+                                dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+                                dotnet_enable_inlay_hints_for_other_parameters = true,
+                                dotnet_enable_inlay_hints_for_parameters = true,
+                                dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+                                dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+                                dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+                            },
+                            ["csharp|code_lens"] = {
+                                dotnet_enable_references_code_lens = true,
+                            },
+                        },
+                    },
+                }
+            end,
+            init = function()
+                -- we add the razor filetypes before the plugin loads
+                vim.filetype.add {
+                    extension = {
+                        razor = "razor.html",
+                        cshtml = "razor.html",
+                    },
+                }
+            end,
         },
 
         { -- Autoformat
