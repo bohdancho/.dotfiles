@@ -162,21 +162,31 @@ fi
 
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
-# # fnm - disabled in favor of pnpm
-# export PATH="/home/bohdancho/.local/share/fnm:$PATH"
-# eval "`fnm env`"
 
-# pnpm
-export PNPM_HOME="/home/bohdancho/.local/share/pnpm"
-case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+# # pnpm
+# export PNPM_HOME="/home/bohdancho/.local/share/pnpm"
+# case ":$PATH:" in
+#     *":$PNPM_HOME:"*) ;;
+#     *) export PATH="$PNPM_HOME:$PATH" ;;
+# esac
+# # pnpm end
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH=$PATH:/usr/local/go/bin
 . "$HOME/.cargo/env"
+
+export PATH="$PATH:/home/bohdancho/.turso"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Yazi
+export EDITOR=nvim
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+

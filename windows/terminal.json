@@ -5,7 +5,7 @@
     [
         {
             "command": "paste",
-            "keys": "ctrl+v"
+            "id": "User.paste"
         },
         {
             "command": 
@@ -13,17 +13,36 @@
                 "action": "copy",
                 "singleLine": false
             },
-            "keys": "ctrl+c"
+            "id": "User.copy.644BA8F2"
         },
         {
-            "keys": "ctrl+backspace",
-            "command": { "action": "sendInput", "input": "\u0017" }
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u0017"
+            },
+            "id": "User.sendInput.817164EE"
         }
     ],
     "confirmCloseAllTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{e5a83caa-4c73-52b3-ae6b-bc438d721ef9}",
+    "defaultProfile": "{4ff56d04-d9cf-57ea-bae2-ad396374e7e3}",
+    "keybindings": 
+    [
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.sendInput.817164EE",
+            "keys": "ctrl+backspace"
+        }
+    ],
     "launchMode": "maximized",
     "newTabMenu": 
     [
@@ -35,24 +54,24 @@
     {
         "defaults": 
         {
+            "bellStyle": "none",
             "colorScheme": "Tokyo Night",
             "font": 
             {
                 "face": "JetBrainsMono Nerd Font",
-                "size": 12.0,
+                "size": 12,
                 "weight": "normal"
             },
             "padding": "0",
             "scrollbarState": "hidden",
-            "startingDirectory": null,
-            "bellStyle": "none"
+            "startingDirectory": null
         },
         "list": 
         [
             {
-                "guid": "{e5a83caa-4c73-52b3-ae6b-bc438d721ef9}",
+                "guid": "{4ff56d04-d9cf-57ea-bae2-ad396374e7e3}",
                 "hidden": false,
-                "name": "Ubuntu 22.04.3 LTS",
+                "name": "Ubuntu 22.04.5 LTS",
                 "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
             },
             {
@@ -65,6 +84,12 @@
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Line"
+            },
+            {
+                "guid": "{a3f264e8-c139-563a-b012-2121fe0e0410}",
+                "hidden": false,
+                "name": "docker-desktop",
+                "source": "Microsoft.WSL"
             }
         ]
     },
@@ -115,7 +140,7 @@
             "selectionBackground": "#28344A",
             "white": "#C0CAF5",
             "yellow": "#E0AF68"
-        },
+        }
     ],
     "themes": [],
     "useAcrylicInTabRow": true

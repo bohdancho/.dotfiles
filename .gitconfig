@@ -3,3 +3,11 @@
 	name = Bohdan Chornokondratenko
 [init]
 	defaultBranch = main
+[core]
+	eol = lf
+	editor = vim
+[credential]
+	helper = store
+[push]
+	autoSetupRemote = true
+	default = current

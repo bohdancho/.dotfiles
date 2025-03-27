@@ -4,17 +4,21 @@
 # https://github.com/ThePrimeagen/.dotfiles/blob/602019e902634188ab06ea31251c01c1a43d1621/bin/.local/scripts/tmux-sessionizer
 
 PROJECTS=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
-EXTRA=("$HOME" "$HOME/projects" "$HOME/personal" "$HOME/.local/share/nvim/lazy" "$WIN")
+
+VSCUBING=$(find ~/projects/vscubing -mindepth 1 -maxdepth 1 -type d)
+EXTRA=("$HOME" "$VSCUBING" "$HOME/projects" "$HOME/personal" "$HOME/.local/share/nvim/lazy" "$WIN" "$HOME/.config/nvim")
 PRESETS=($(ls ~/.local/bin/tmux-presets))
+
 SELECTED=$(echo "$PROJECTS ${EXTRA[*]} ${PRESETS[*]}" | tr ' ' '\n' | fzf)
 
 if [[ -z $SELECTED ]]; then
     exit 1
 fi
 
+
+
 # if is a preset
 if echo "${PRESETS[@]}" | grep $SELECTED> /dev/null; then
-    echo "${PRESETS[@]}" | grep $SELECTED
     tmux neww "~/.local/bin/tmux-presets/$SELECTED"
     exit 0
 fi
