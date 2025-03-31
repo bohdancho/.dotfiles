@@ -79,7 +79,6 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.guicursor = "n-v-c-i:block"
 
--- TODO: check if this works
 vim.opt.conceallevel = 2
 vim.keymap.set(
     "n",
@@ -106,6 +105,7 @@ require("lazy").setup {
         version = "*",
     },
     spec = {
+        "mbbill/undotree",
         {
             "bullets-vim/bullets.vim",
             ft = "markdown",
@@ -221,22 +221,22 @@ require("lazy").setup {
                     harpoon.ui:toggle_quick_menu(harpoon:list())
                 end)
 
-                vim.keymap.set("n", "<leader>h1", function()
+                vim.keymap.set("n", "<leader>1", function()
                     harpoon:list():select(1)
                 end)
-                vim.keymap.set("n", "<leader>h2", function()
+                vim.keymap.set("n", "<leader>2", function()
                     harpoon:list():select(2)
                 end)
-                vim.keymap.set("n", "<leader>h3", function()
+                vim.keymap.set("n", "<leader>3", function()
                     harpoon:list():select(3)
                 end)
-                vim.keymap.set("n", "<leader>h4", function()
+                vim.keymap.set("n", "<leader>4", function()
                     harpoon:list():select(4)
                 end)
-                vim.keymap.set("n", "<leader>h5", function()
+                vim.keymap.set("n", "<leader>5", function()
                     harpoon:list():select(5)
                 end)
-                vim.keymap.set("n", "<leader>h6", function()
+                vim.keymap.set("n", "<leader>6", function()
                     harpoon:list():select(6)
                 end)
             end,
@@ -389,7 +389,6 @@ require("lazy").setup {
             end,
         },
         {
-            -- TODO: very slow, fix pls
             "akinsho/toggleterm.nvim",
             keys = {
                 { "<leader>t", "<cmd>ToggleTerm<cr>", mode = { "n", "t" } },
@@ -398,6 +397,7 @@ require("lazy").setup {
         },
         {
             "nvim-treesitter/nvim-treesitter",
+            commit = "93ce9feb4fabbb37b3e7f47d80f27be778f4d956",
             dependencies = {
                 "nvim-treesitter/nvim-treesitter-textobjects",
                 "nvim-treesitter/nvim-treesitter-context",
@@ -759,8 +759,8 @@ require("lazy").setup {
                 -- we add the razor filetypes before the plugin loads
                 vim.filetype.add {
                     extension = {
-                        razor = "razor.html",
-                        cshtml = "razor.html",
+                        razor = "razor",
+                        cshtml = "razor",
                     },
                 }
             end,

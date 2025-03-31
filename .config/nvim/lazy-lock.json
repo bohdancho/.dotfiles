@@ -21,7 +21,7 @@
   "nui.nvim": { "branch": "main", "commit": "a0fd35fcbb4cb479366f1dc5f20145fd718a3733" },
   "nvim-lspconfig": { "branch": "master", "commit": "6b63bdf2399b9bedf93297d98419550523a9ad68" },
   "nvim-surround": { "branch": "main", "commit": "ae298105122c87bbe0a36b1ad20b06d417c0433e" },
-  "nvim-treesitter": { "branch": "master", "commit": "cfc6f2c117aaaa82f19bcce44deec2c194d900ab" },
+  "nvim-treesitter": { "branch": "master", "commit": "93ce9feb4fabbb37b3e7f47d80f27be778f4d956" },
   "nvim-treesitter-context": { "branch": "master", "commit": "198720b4016af04c9590f375d714d5bf8afecc1a" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "ad8f0a472148c3e0ae9851e26a722ee4e29b1595" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "1b212c2eee76d787bbea6aa5e92a2b534e7b4f8f" },
@@ -36,6 +36,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "tokyonight.nvim": { "branch": "main", "commit": "b262293ef481b0d1f7a14c708ea7ca649672e200" },
   "tree-sitter-angular": { "branch": "main", "commit": "aeca5c8c3dfa2c4b543a663f44e0e14d3c614d32" },
+  "undotree": { "branch": "master", "commit": "76c4e32d8f1aa493bb68d4a3fcd3c700395c303c" },
   "vim-fugitive": { "branch": "master", "commit": "96c1009fcf8ce60161cc938d149dd5a66d570756" },
   "vim-sleuth": { "branch": "master", "commit": "1d25e8e5dc4062e38cab1a461934ee5e9d59e5a8" }
 }

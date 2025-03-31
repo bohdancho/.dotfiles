@@ -2,6 +2,7 @@ set PATH /Users/bohdan/.rd/bin $PATH
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 source $HOME/.config/fish/wifi.fish
+source $HOME/.config/fish/goldbeck.fish
 set fish_greeting "sup nerds"
 
 # my custom stuff
@@ -35,4 +36,3 @@ export PATH="$HOME/sqlpackage:$PATH"
 
 # Created by `pipx` on 2025-02-25 18:00:50
 set PATH $PATH /Users/bohdan/.local/bin
-
