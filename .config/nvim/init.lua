@@ -61,9 +61,9 @@ vim.keymap.set("n", "<leader>cwc", "sa'(sa({acn<C-C><C-C>l%i,<Space>", { remap =
 
 vim.keymap.set(
     "n",
-    "<leader>lq",
+    "<leader>tq",
     [[<cmd>cexpr systemlist('bunx tsc | grep -o "src/[^\(]*" | sed "s/$/:0:0/" | uniq')<cr><cmd>copen<cr>]],
-    { desc = "LSP: tsc [q]uickfix" }
+    { desc = "[T]ypescript: [q]uickfix" }
 )
 
 vim.opt.relativenumber = true
@@ -79,6 +79,7 @@ vim.opt.undofile = true
 vim.opt.swapfile = false
 vim.opt.guicursor = "n-v-c-i:block"
 
+-- TODO: check if this works
 vim.opt.conceallevel = 2
 vim.keymap.set(
     "n",
@@ -100,12 +101,13 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Setup lazy.nvim
+---@type LazyConfig
 require("lazy").setup {
     defaults = {
         version = "*",
     },
+    ---@type LazySpec
     spec = {
-        "mbbill/undotree",
         {
             "bullets-vim/bullets.vim",
             ft = "markdown",
@@ -113,11 +115,20 @@ require("lazy").setup {
         {
             "laytan/cloak.nvim",
             priority = 1000,
+            lazy = false,
             opts = {},
+            keys = {
+                {
+                    "<leader>cc",
+                    "<cmd>CloakToggle<cr>",
+                    desc = "Cloak toggle",
+                },
+            },
         },
         {
             "folke/tokyonight.nvim",
             priority = 1000,
+            lazy = false,
             config = function()
                 vim.cmd.colorscheme "tokyonight-night"
                 vim.api.nvim_set_hl(0, "BohdanchoBorder", { bg = "NONE", fg = "#27a1b9" })
@@ -128,10 +139,8 @@ require("lazy").setup {
             dependencies = { "nvim-tree/nvim-web-devicons" },
             keys = {
                 {
-                    "-",
-                    function()
-                        require("oil").open()
-                    end,
+                    "+",
+                    "<cmd>Oil<cr>",
                     desc = "Open file tree",
                 },
             },
@@ -143,6 +152,38 @@ require("lazy").setup {
                     show_hidden = true,
                 },
             },
+        },
+        {
+            "mikavilpas/yazi.nvim",
+            dependencies = { "folke/snacks.nvim" },
+            keys = {
+                {
+                    "-",
+                    mode = { "n", "v" },
+                    "<cmd>Yazi<cr>",
+                    desc = "Open yazi at the current file",
+                },
+                {
+                    -- Open in the current working directory
+                    "<leader>cw",
+                    "<cmd>Yazi cwd<cr>",
+                    desc = "Open the file manager in nvim's working directory",
+                },
+            },
+            ---@type YaziConfig | {}
+            opts = {
+                -- if you want to open yazi instead of netrw, see below for more info
+                open_for_directories = true,
+                keymaps = {
+                    show_help = "<f1>",
+                },
+            },
+            -- 👇 if you use `open_for_directories=true`, this is recommended
+            init = function()
+                -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
+                -- vim.g.loaded_netrw = 1
+                vim.g.loaded_netrwPlugin = 1
+            end,
         },
         {
             "lewis6991/gitsigns.nvim",
@@ -210,35 +251,23 @@ require("lazy").setup {
             "ThePrimeagen/harpoon",
             branch = "harpoon2",
             dependencies = { "nvim-lua/plenary.nvim" },
+            keys = { "<leader>ha", "<leader>hl", "<leader>h1", "<leader>h2", "<leader>h3", "<leader>h4", "<leader>h5", "<leader>h6" },
             config = function()
                 local harpoon = require "harpoon"
                 harpoon:setup()
 
                 vim.keymap.set("n", "<leader>ha", function()
-                    harpoon:list():add()
+                    harpoon:list():append()
                 end)
                 vim.keymap.set("n", "<leader>hl", function()
                     harpoon.ui:toggle_quick_menu(harpoon:list())
                 end)
 
-                vim.keymap.set("n", "<leader>1", function()
-                    harpoon:list():select(1)
-                end)
-                vim.keymap.set("n", "<leader>2", function()
-                    harpoon:list():select(2)
-                end)
-                vim.keymap.set("n", "<leader>3", function()
-                    harpoon:list():select(3)
-                end)
-                vim.keymap.set("n", "<leader>4", function()
-                    harpoon:list():select(4)
-                end)
-                vim.keymap.set("n", "<leader>5", function()
-                    harpoon:list():select(5)
-                end)
-                vim.keymap.set("n", "<leader>6", function()
-                    harpoon:list():select(6)
-                end)
+                for i = 1, 6 do
+                    vim.keymap.set("n", "<leader>" .. i, function()
+                        harpoon:list():select(i)
+                    end)
+                end
             end,
         },
         {
@@ -249,14 +278,20 @@ require("lazy").setup {
         {
             "lukas-reineke/indent-blankline.nvim",
             main = "ibl",
+            event = "VeryLazy",
             opts = {
                 indent = {
                     char = "▏", -- This is a slightly thinner char than the default one, check :help ibl.config.indent.char
                 },
             },
         },
-        "tpope/vim-sleuth",
-        { "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = { signs = false } },
+        { "tpope/vim-sleuth", event = "VeryLazy" },
+        {
+            "folke/todo-comments.nvim",
+            event = "VeryLazy",
+            dependencies = { "nvim-lua/plenary.nvim" },
+            opts = { signs = false },
+        },
         {
             "nvim-lualine/lualine.nvim",
             dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -391,13 +426,12 @@ require("lazy").setup {
         {
             "akinsho/toggleterm.nvim",
             keys = {
-                { "<leader>t", "<cmd>ToggleTerm<cr>", mode = { "n", "t" } },
+                { "<leader>n", "<cmd>ToggleTerm size=20<cr>", mode = { "n", "t" } },
             },
             opts = {},
         },
         {
             "nvim-treesitter/nvim-treesitter",
-            commit = "93ce9feb4fabbb37b3e7f47d80f27be778f4d956",
             dependencies = {
                 "nvim-treesitter/nvim-treesitter-textobjects",
                 "nvim-treesitter/nvim-treesitter-context",
@@ -406,13 +440,11 @@ require("lazy").setup {
             lazy = false,
             build = ":TSUpdate",
             config = function()
-                local configs = require "nvim-treesitter.configs"
-
                 require("treesitter-context").setup {
                     multiline_threshold = 1, -- Maximum number of lines to show for a single context
                 }
 
-                configs.setup {
+                require("nvim-treesitter.configs").setup {
                     auto_install = true,
                     highlight = {
                         enable = true,
@@ -461,11 +493,21 @@ require("lazy").setup {
 
                 -- Useful status updates for LSP.
                 { "j-hui/fidget.nvim", opts = {} },
-
-                "L3MON4D3/LuaSnip",
-
-                -- Allows extra capabilities provided by nvim-cmp
-                -- "hrsh7th/cmp-nvim-lsp",
+                {
+                    "yioneko/nvim-vtsls",
+                    keys = {
+                        {
+                            "<leader>ta",
+                            "<cmd>VtsExec add_missing_imports<cr>",
+                            desc = "[T]typescript [a]dd missing imports",
+                        },
+                        {
+                            "<leader>tr",
+                            "<cmd>VtsExec remove_unused_imports<cr>",
+                            desc = "[T]typescript [r]emove unused imports",
+                        },
+                    },
+                },
             },
             config = function()
                 vim.api.nvim_create_autocmd("LspAttach", {
@@ -494,44 +536,17 @@ require("lazy").setup {
 
                         map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 
-                        -- The following two autocommands are used to highlight references of the
-                        -- word under your cursor when your cursor rests there for a little while.
-                        --    See `:help CursorHold` for information about when this is executed
-                        --
-                        -- When you move your cursor, the highlights will be cleared (the second autocommand).
-                        local client = vim.lsp.get_client_by_id(event.data.client_id)
-                        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-                            local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-                            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-                                buffer = event.buf,
-                                group = highlight_augroup,
-                                callback = vim.lsp.buf.document_highlight,
-                            })
-
-                            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-                                buffer = event.buf,
-                                group = highlight_augroup,
-                                callback = vim.lsp.buf.clear_references,
-                            })
-
-                            vim.api.nvim_create_autocmd("LspDetach", {
-                                group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-                                callback = function(event2)
-                                    vim.lsp.buf.clear_references()
-                                    vim.api.nvim_clear_autocmds { group = "kickstart-lsp-highlight", buffer = event2.buf }
-                                end,
-                            })
-                        end
-
                         -- The following code creates a keymap to toggle inlay hints in your
                         -- code, if the language server you are using supports them
                         --
                         -- This may be unwanted, since they displace some of your code
-                        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-                            map("<leader>ih", function()
-                                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-                            end, "Toggle [I]nlay [H]ints")
-                        end
+                        -- local client = vim.lsp.get_client_by_id(event.data.client_id)
+                        -- if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+                        --     map("<leader>ih", function()
+                        --         vim.print(event.buf)
+                        --         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+                        --     end, "Toggle [I]nlay [H]ints")
+                        -- end
                     end,
                 })
 
@@ -574,30 +589,30 @@ require("lazy").setup {
                         end,
                     },
                     vtsls = {},
-                    emmet_ls = {
-                        on_attach = function(client, bufnr)
-                            vim.keymap.set("i", "<C-e>", function()
-                                client.request("textDocument/completion", vim.lsp.util.make_position_params(), function(_, result)
-                                    local textEdit = result[1].textEdit
-                                    local snip_string = textEdit.newText
-
-                                    -- remove the inserted text
-                                    local start_col = textEdit.range.start.character + 1
-                                    vim.fn.cursor(vim.fn.line ".", start_col)
-                                    local old_text = result[1].label
-                                    vim.cmd.normal { args = { "d" .. #old_text .. "l" } }
-
-                                    -- if the inserted text was the last text on the line, the deletion command will leave the cursor 1 column left
-                                    -- of where we need to insert the snippet (because insert mode can put the cursor 1 position ahead of the last column)
-                                    -- move the cursor back over 1
-                                    vim.fn.cursor(vim.fn.line ".", start_col)
-                                    textEdit.newText = ""
-                                    vim.lsp.util.apply_text_edits({ textEdit }, bufnr, client.offset_encoding)
-                                    require("luasnip").lsp_expand(snip_string)
-                                end, bufnr)
-                            end, { buffer = bufnr, desc = "LSP: Emmet autocomplete" })
-                        end,
-                    },
+                    -- emmet_ls = {
+                    --     on_attach = function(client, bufnr)
+                    --         vim.keymap.set("i", "<C-e>", function()
+                    --             client.request("textDocument/completion", vim.lsp.util.make_position_params(), function(_, result)
+                    --                 local textEdit = result[1].textEdit
+                    --                 local snip_string = textEdit.newText
+                    --
+                    --                 -- remove the inserted text
+                    --                 local start_col = textEdit.range.start.character + 1
+                    --                 vim.fn.cursor(vim.fn.line ".", start_col)
+                    --                 local old_text = result[1].label
+                    --                 vim.cmd.normal { args = { "d" .. #old_text .. "l" } }
+                    --
+                    --                 -- if the inserted text was the last text on the line, the deletion command will leave the cursor 1 column left
+                    --                 -- of where we need to insert the snippet (because insert mode can put the cursor 1 position ahead of the last column)
+                    --                 -- move the cursor back over 1
+                    --                 vim.fn.cursor(vim.fn.line ".", start_col)
+                    --                 textEdit.newText = ""
+                    --                 vim.lsp.util.apply_text_edits({ textEdit }, bufnr, client.offset_encoding)
+                    --                 vim.snippet.expand(snip_string)
+                    --             end, bufnr)
+                    --         end, { buffer = bufnr, desc = "LSP: Emmet autocomplete" })
+                    --     end,
+                    -- },
                     tailwindcss = {
                         settings = {
                             -- add autocomplete in unusual places for classes like cva
@@ -658,7 +673,6 @@ require("lazy").setup {
                     },
                     pyright = {},
                 }
-
                 local ensure_installed = vim.tbl_keys(servers or {})
 
                 vim.list_extend(ensure_installed, {
@@ -819,6 +833,13 @@ require("lazy").setup {
             end,
         },
         {
+            "chrisgrieser/nvim-scissors",
+            dependencies = "nvim-telescope/telescope.nvim", -- if using telescope
+            opts = {
+                snippetDir = vim.fn.stdpath "config" .. "/snippets",
+            },
+        },
+        {
             "saghen/blink.cmp",
             version = "*",
             event = { "InsertEnter", "CmdlineEnter" },
@@ -831,25 +852,22 @@ require("lazy").setup {
 
                         -- vscode format
                         require("luasnip.loaders.from_vscode").lazy_load()
-                        require("luasnip.loaders.from_vscode").lazy_load { paths = vim.g.vscode_snippets_path or "" }
+                        require("luasnip.loaders.from_vscode").lazy_load { paths = vim.fn.stdpath "config" .. "/snippets" }
 
-                        -- snipmate format
-                        require("luasnip.loaders.from_snipmate").load()
-                        require("luasnip.loaders.from_snipmate").lazy_load { paths = vim.g.snipmate_snippets_path or "" }
+                        -- -- snipmate format
+                        -- require("luasnip.loaders.from_snipmate").load()
+                        -- require("luasnip.loaders.from_snipmate").lazy_load { paths = vim.g.snipmate_snippets_path or "" }
 
-                        -- lua format
-                        require("luasnip.loaders.from_lua").load()
-                        require("luasnip.loaders.from_lua").lazy_load { paths = vim.g.lua_snippets_path or "" }
+                        -- -- lua format
+                        -- require("luasnip.loaders.from_lua").load()
+                        -- require("luasnip.loaders.from_lua").lazy_load { paths = vim.g.lua_snippets_path or "" }
                     end,
                 },
                 "rafamadriz/friendly-snippets",
             },
             opts = {
-                -- 'default' for mappings similar to built-in completion
-                -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-                -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-                -- See the full "keymap" documentation for information on defining your own keymap.
                 snippets = { preset = "luasnip" },
+
                 keymap = {
                     preset = "none",
 
@@ -870,25 +888,49 @@ require("lazy").setup {
                     },
                 },
 
-                appearance = {
-                    use_nvim_cmp_as_default = true,
-                    nerd_font_variant = "mono",
-                },
-
-                sources = {
-                    default = { "lsp", "path", "snippets", "buffer" },
-                },
                 signature = { enabled = true },
+
+                -- fuzzy = {
+                --     implementation = "prefer_rust",
+                --     sorts = {
+                --         function(a, b)
+                --             if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
+                --                 return
+                --             end
+                --             return b.client_name == "emmet_ls"
+                --         end,
+                --         -- default sorts
+                --         "score",
+                --         "sort_text",
+                --     },
+                -- },
+                cmdline = {
+                    completion = {
+                        menu = { auto_show = true },
+                    },
+                    keymap = {
+                        preset = "none",
+
+                        ["<Tab>"] = { "show" },
+                        ["<C-y>"] = { "select_and_accept" },
+                        ["<C-k>"] = { "select_prev", "fallback" },
+                        ["<C-j>"] = { "select_next", "fallback" },
+                        ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+                        ["<C-d>"] = { "scroll_documentation_down", "fallback" },
+                    },
+                },
             },
             opts_extend = { "sources.default" },
         },
         {
             "mattkubej/jest.nvim",
+            keys = { "Jest", "JestFile", "JestSingle", "JestCoverage" },
             opts = {},
         },
         {
             "nvim-neo-tree/neo-tree.nvim",
             cmd = "Neotree",
+            lazy = true,
             dependencies = {
                 "nvim-lua/plenary.nvim",
                 "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -902,62 +944,18 @@ require("lazy").setup {
                     end,
                     desc = "Explorer NeoTree (cwd)",
                 },
-                {
-                    "<leader>ge",
-                    function()
-                        require("neo-tree.command").execute { source = "git_status", toggle = true }
-                    end,
-                    desc = "Git Explorer",
-                },
             },
-            deactivate = function()
-                vim.cmd [[Neotree close]]
-            end,
+            opts = {},
+        },
+        {
+            "folke/which-key.nvim",
+            event = "VeryLazy",
             opts = {
-                sources = { "filesystem", "buffers", "git_status" },
-                open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
-                filesystem = {
-                    bind_to_cwd = true,
-                    follow_current_file = { enabled = true },
-                    use_libuv_file_watcher = true,
-                },
-                window = {
-                    mappings = {
-                        ["l"] = "open",
-                        ["h"] = "close_node",
-                        ["<space>"] = "none",
-                        ["Y"] = {
-                            function(state)
-                                local node = state.tree:get_node()
-                                local path = node:get_id()
-                                vim.fn.setreg("+", path, "c")
-                            end,
-                            desc = "Copy Path to Clipboard",
-                        },
-                        ["O"] = {
-                            function(state)
-                                require("lazy.util").open(state.tree:get_node().path, { system = true })
-                            end,
-                            desc = "Open with System Application",
-                        },
-                        ["P"] = { "toggle_preview", config = { use_float = false } },
-                    },
-                },
-                default_component_configs = {
-                    indent = {
-                        with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-                        expander_collapsed = "",
-                        expander_expanded = "",
-                        expander_highlight = "NeoTreeExpander",
-                    },
-                    git_status = {
-                        symbols = {
-                            unstaged = "󰄱",
-                            staged = "󰱒",
-                        },
-                    },
-                },
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
             },
         },
+        { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
     },
 }

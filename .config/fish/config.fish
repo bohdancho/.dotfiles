@@ -11,6 +11,7 @@ alias "vim"="nvim"
 alias "cat"="bat"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export FZF_DEFAULT_COMMAND='rg --files --hidden -g "!.git/"'
+export EDITOR=nvim
 
 starship init fish | source
 
