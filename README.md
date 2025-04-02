@@ -1,8 +1,7 @@
 # My dotfiles!!!
 
-```
+```bash
 sudo apt install stow
-cd ~/.dotfiles
+cd ~/.dotfiles --no-folding
 stow .
 ```
-I'm not sure what's up with .local/bin, this might need manual simlinking.
