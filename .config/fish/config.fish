@@ -1,11 +1,12 @@
 set PATH /Users/bohdan/.rd/bin $PATH
 
+export GPG_TTY=$(tty)
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 source $HOME/.config/fish/wifi.fish
 source $HOME/.config/fish/goldbeck.fish
 set fish_greeting "sup nerds"
 
-# my custom stuff
 alias "vim"="nvim"
 
 alias "cat"="bat"
