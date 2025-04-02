@@ -2,6 +2,6 @@
 
 ```bash
 sudo apt install stow
-cd ~/.dotfiles --no-folding
-stow .
+cd ~/.dotfiles
+stow --no-folding . 
 ```
