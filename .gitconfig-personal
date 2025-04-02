@@ -1,0 +1,15 @@
+[user]
+	email = bogdan.chornocondratenko@gmail.com
+	name = Bohdan Chornokondratenko
+[init]
+	defaultBranch = main
+[core]
+	eol = lf
+	editor = vim
+[credential]
+	helper = osxkeychain
+[push]
+	autoSetupRemote = true
+	default = current
+[commit]
+    gpgSign = true
