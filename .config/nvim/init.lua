@@ -426,7 +426,7 @@ require("lazy").setup {
         {
             "akinsho/toggleterm.nvim",
             keys = {
-                { "<leader>n", "<cmd>ToggleTerm size=20<cr>", mode = { "n", "t" } },
+                { "<C-n>", "<cmd>ToggleTerm size=20<cr>", mode = { "n", "t" } },
             },
             opts = {},
         },

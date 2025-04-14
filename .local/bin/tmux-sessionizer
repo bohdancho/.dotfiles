@@ -8,7 +8,7 @@ PERSONAL=$(find ~/personal -mindepth 1 -maxdepth 1 -type d)
 VSCUBING=$(find ~/personal/vscubing -mindepth 1 -maxdepth 1 -type d)
 EXTRA=("$HOME" "$HOME/work" "$HOME/personal" "$HOME/personal/vscubing" "$HOME/.config/nvim" "$HOME/.dotfiles" "$HOME/.local/share/nvim/lazy")
 PRESETS=($(ls ~/.local/bin/tmux-presets))
-SELECTED=$(echo "$WORK $PERSONAL $VSCUBING ${EXTRA[*]} ${PRESETS[*]}" | tr ' ' '\n' | fzf)
+SELECTED=$(echo "${PRESETS[*]} $WORK $PERSONAL $VSCUBING ${EXTRA[*]}" | tr ' ' '\n' | fzf)
 
 if [[ -z $SELECTED ]]; then
     exit 1
