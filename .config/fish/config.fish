@@ -36,5 +36,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/sqlpackage:$PATH"
 
-# Created by `pipx` on 2025-02-25 18:00:50
-set PATH $PATH /Users/bohdan/.local/bin
+fish_add_path /Users/bohdan/.local/bin
+
+fish_add_path /opt/homebrew/opt/ruby/bin
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+export ANDROID_HOME=/Users/bohdan/Library/Android/sdk
+fish_add_path $ANDROID_HOME/emulator
+fish_add_path $ANDROID_HOME/platform-tools

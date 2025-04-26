@@ -72,6 +72,7 @@ vim.opt.fillchars = { eob = " " }
 vim.opt.scrolloff = 8
 
 vim.keymap.set("n", "<C-c>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("i", "<C-c>", function() end)
 
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -508,6 +509,7 @@ require("lazy").setup {
                         },
                     },
                 },
+                { "vim-ruby/vim-ruby", event = { "BufReadPost", "BufNewFile" } },
             },
             config = function()
                 vim.api.nvim_create_autocmd("LspAttach", {
@@ -670,8 +672,16 @@ require("lazy").setup {
                         on_attach = function(_, bufnr)
                             vim.keymap.set("n", "<leader>lf", "<cmd>EslintFixAll<CR>", { buffer = bufnr, desc = "LSP: Eslint[F]ixAll" })
                         end,
+                        settings = {
+                            eslint = {
+                                experimental = {
+                                    useFlatConfig = false,
+                                },
+                            },
+                        },
                     },
                     pyright = {},
+                    ruby_lsp = {},
                 }
                 local ensure_installed = vim.tbl_keys(servers or {})
 
