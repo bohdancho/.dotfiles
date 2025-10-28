@@ -252,6 +252,7 @@ require("lazy").setup {
             "ThePrimeagen/harpoon",
             branch = "harpoon2",
             dependencies = { "nvim-lua/plenary.nvim" },
+            lazy = false,
             keys = { "<leader>ha", "<leader>hl", "<leader>h1", "<leader>h2", "<leader>h3", "<leader>h4", "<leader>h5", "<leader>h6" },
             config = function()
                 local harpoon = require "harpoon"
@@ -682,6 +683,7 @@ require("lazy").setup {
                     },
                     pyright = {},
                     ruby_lsp = {},
+                    rust_analyzer = {},
                 }
                 local ensure_installed = vim.tbl_keys(servers or {})
 
@@ -967,5 +969,7 @@ require("lazy").setup {
             },
         },
         { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+        { "cappyzawa/starlark.vim" },
+        { "towolf/vim-helm" },
     },
 }

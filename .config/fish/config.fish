@@ -40,6 +40,15 @@ fish_add_path /Users/bohdan/.local/bin
 
 fish_add_path /opt/homebrew/opt/ruby/bin
 
+# export PATH="$(python3 -m site --user-base)/bin:$PATH"
+# export PATH="$(brew --prefix python)/libexec/bin:$PATH"
+fish_add_path /opt/homebrew/opt/python@3.11/libexec/bin
+fish_add_path /Users/bohdan/.cargo/bin
+fish_add_path /Users/bohdan/.local/share/solana/install/active_release/bin
+
+
+# alias "python"="python3"
+
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 export ANDROID_HOME=/Users/bohdan/Library/Android/sdk
 fish_add_path $ANDROID_HOME/emulator

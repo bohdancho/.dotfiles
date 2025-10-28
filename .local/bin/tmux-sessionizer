@@ -6,7 +6,7 @@
 WORK=$(find ~/work -mindepth 1 -maxdepth 1 -type d)
 PERSONAL=$(find ~/personal -mindepth 1 -maxdepth 1 -type d)
 VSCUBING=$(find ~/personal/vscubing -mindepth 1 -maxdepth 1 -type d)
-EXTRA=("$HOME" "$HOME/work" "$HOME/personal" "$HOME/personal/vscubing" "$HOME/.config/nvim" "$HOME/.dotfiles" "$HOME/.local/share/nvim/lazy")
+EXTRA=("$HOME" "$HOME/work" "$HOME/work/chatgb" "$HOME/uni" "$HOME/personal" "$HOME/personal/vscubing" "$HOME/.config/nvim" "$HOME/.dotfiles" "$HOME/.local/share/nvim/lazy")
 PRESETS=($(ls ~/.local/bin/tmux-presets))
 SELECTED=$(echo "${PRESETS[*]} $WORK $PERSONAL $VSCUBING ${EXTRA[*]}" | tr ' ' '\n' | fzf)
 
