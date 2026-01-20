@@ -684,6 +684,7 @@ require("lazy").setup {
                     pyright = {},
                     ruby_lsp = {},
                     rust_analyzer = {},
+                    helm_ls = {},
                 }
                 local ensure_installed = vim.tbl_keys(servers or {})
 
@@ -971,5 +972,12 @@ require("lazy").setup {
         { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
         { "cappyzawa/starlark.vim" },
         { "towolf/vim-helm" },
+        -- {
+        --     "qvalentin/helm-ls.nvim",
+        --     ft = "helm",
+        --     opts = {
+        --         -- leave empty or see below
+        --     },
+        -- },
     },
 }

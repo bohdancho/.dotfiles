@@ -24,9 +24,9 @@ if test -z "$TMUX"
 end
 
 # pnpm
-set -gx PNPM_HOME "/Users/bohdan/Library/pnpm"
+set -gx PNPM_HOME /Users/bohdan/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
 
@@ -53,3 +53,12 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 export ANDROID_HOME=/Users/bohdan/Library/Android/sdk
 fish_add_path $ANDROID_HOME/emulator
 fish_add_path $ANDROID_HOME/platform-tools
+
+alias k8s-cur "kubectl config get-contexts"
+alias k8s-dev "kubectl config use-context aks-k8s-dev"
+alias k8s-man "kubectl config use-context aks-k8s-management"
+alias k8s-loc "kubectl config use-context rancher-desktop"
+
+function k8s-ns
+    kubectl config set-context --current --namespace=$argv[1]
+end
